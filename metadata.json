@@ -1,0 +1,5 @@
+{
+  "name": "Gameboy Tetris Classic",
+  "description": "A faithful recreation of the classic Gameboy Tetris experience, featuring original scoring, leveling, and a global leaderboard.",
+  "requestFramePermissions": []
+}

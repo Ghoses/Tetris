@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-gameboy: "Press Start 2P", system-ui, sans-serif;
+  --color-gb-darkest: #0f380f;
+  --color-gb-dark: #306230;
+  --color-gb-light: #8bac0f;
+  --color-gb-lightest: #9bbc0f;
+}
+
+body {
+  background-color: #1a1a1a;
+  color: #ffffff;
+  font-family: var(--font-gameboy);
+  margin: 0;
+  overflow: hidden;
+}
+
+.gb-screen {
+  background-color: var(--color-gb-lightest);
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+}
+
+.pixel-grid {
+  background-size: 4px 4px;
+  background-image: linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px);
+}
+
