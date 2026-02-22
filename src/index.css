@@ -3,28 +3,67 @@
 
 @theme {
   --font-gameboy: "Press Start 2P", system-ui, sans-serif;
-  --color-gb-darkest: #0f380f;
-  --color-gb-dark: #306230;
-  --color-gb-light: #8bac0f;
-  --color-gb-lightest: #9bbc0f;
+  --color-gb-1: #e0f8d0; /* Lightest */
+  --color-gb-2: #88c070; /* Light */
+  --color-gb-3: #346856; /* Dark */
+  --color-gb-4: #081820; /* Darkest */
 }
 
 body {
-  background-color: #1a1a1a;
-  color: #ffffff;
+  background-color: #000;
+  color: var(--color-gb-4);
   font-family: var(--font-gameboy);
   margin: 0;
   overflow: hidden;
 }
 
 .gb-screen {
-  background-color: var(--color-gb-lightest);
-  box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+  background-color: var(--color-gb-1);
 }
 
-.pixel-grid {
-  background-size: 4px 4px;
-  background-image: linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px),
-                    linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px);
+/* Block Patterns */
+.block-pattern-1 { /* Dark block with light inner square */
+  background-color: var(--color-gb-4);
+  border: 1px solid var(--color-gb-1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+}
+.block-pattern-1::after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  border: 1px solid var(--color-gb-1);
+}
+
+.block-pattern-2 { /* Light block with dark inner square */
+  background-color: var(--color-gb-1);
+  border: 1px solid var(--color-gb-4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+}
+.block-pattern-2::after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  border: 1px solid var(--color-gb-4);
+}
+
+.block-pattern-3 { /* Textured/Grey block */
+  background-color: var(--color-gb-2);
+  border: 1px solid var(--color-gb-4);
+  background-image: radial-gradient(var(--color-gb-4) 1px, transparent 1px);
+  background-size: 3px 3px;
+}
+
+.brick-border {
+  background-color: var(--color-gb-4);
+  background-image: 
+    linear-gradient(var(--color-gb-1) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-gb-1) 1px, transparent 1px);
+  background-size: 8px 4px;
 }
 

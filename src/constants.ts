@@ -5,7 +5,7 @@ export type PieceType = 'I' | 'J' | 'L' | 'O' | 'S' | 'T' | 'Z';
 
 export interface Piece {
   shape: number[][];
-  color: string;
+  pattern: string;
   type: PieceType;
 }
 
@@ -17,7 +17,7 @@ export const PIECES: Record<PieceType, Piece> = {
       [0, 0, 0, 0],
       [0, 0, 0, 0],
     ],
-    color: 'bg-gb-darkest',
+    pattern: 'block-pattern-1',
     type: 'I'
   },
   'J': {
@@ -26,7 +26,7 @@ export const PIECES: Record<PieceType, Piece> = {
       [1, 1, 1],
       [0, 0, 0],
     ],
-    color: 'bg-gb-darkest',
+    pattern: 'block-pattern-2',
     type: 'J'
   },
   'L': {
@@ -35,7 +35,7 @@ export const PIECES: Record<PieceType, Piece> = {
       [1, 1, 1],
       [0, 0, 0],
     ],
-    color: 'bg-gb-darkest',
+    pattern: 'block-pattern-3',
     type: 'L'
   },
   'O': {
@@ -43,7 +43,7 @@ export const PIECES: Record<PieceType, Piece> = {
       [1, 1],
       [1, 1],
     ],
-    color: 'bg-gb-darkest',
+    pattern: 'block-pattern-1',
     type: 'O'
   },
   'S': {
@@ -52,7 +52,7 @@ export const PIECES: Record<PieceType, Piece> = {
       [1, 1, 0],
       [0, 0, 0],
     ],
-    color: 'bg-gb-darkest',
+    pattern: 'block-pattern-2',
     type: 'S'
   },
   'T': {
@@ -61,7 +61,7 @@ export const PIECES: Record<PieceType, Piece> = {
       [1, 1, 1],
       [0, 0, 0],
     ],
-    color: 'bg-gb-darkest',
+    pattern: 'block-pattern-3',
     type: 'T'
   },
   'Z': {
@@ -70,7 +70,7 @@ export const PIECES: Record<PieceType, Piece> = {
       [0, 1, 1],
       [0, 0, 0],
     ],
-    color: 'bg-gb-darkest',
+    pattern: 'block-pattern-1',
     type: 'Z'
   },
 };
