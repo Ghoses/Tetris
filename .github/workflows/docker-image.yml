@@ -23,4 +23,4 @@ jobs:
       with:
         context: .
         push: true
-        tags: ghcr.io/${{ github.repository_owner,, }}/tetris:latest
+        tags: ghcr.io/ghoses/tetris:latest
