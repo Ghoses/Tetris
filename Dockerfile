@@ -8,9 +8,9 @@ ENV VITE_GOOGLE_API_KEY=$VITE_GOOGLE_API_KEY
 # Set the working directory
 WORKDIR /app
 
-# Copy package.json and install dependencies (with build tools available)
+# Copy package.json and install dependencies (with retry logic)
 COPY package*.json ./
-RUN npm install
+RUN npm install --verbose 2>&1 || npm install --verbose 2>&1 || npm install --verbose --legacy-peer-deps
 
 # Copy the rest of the application
 COPY . .
