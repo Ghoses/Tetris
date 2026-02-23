@@ -10,7 +10,7 @@ WORKDIR /app
 
 # Copy package.json and install dependencies
 COPY package*.json ./
-RUN npm install
+RUN npm ci --legacy-peer-deps
 
 # Copy the rest of the application
 COPY . .
@@ -28,7 +28,7 @@ COPY --from=build /app/package.json .
 COPY --from=build /app/package-lock.json .
 
 # Install 'serve'
-RUN npm install --omit=dev
+RUN npm ci --omit=dev --legacy-peer-deps
 
 # Copy the built static files
 COPY --from=build /app/dist ./dist
