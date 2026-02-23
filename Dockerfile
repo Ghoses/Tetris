@@ -1,54 +1,41 @@
-# Use a modern Node.js runtime as a parent image
-FROM node:20-alpine
+# Stage 1: Build the application
+FROM node:20-alpine AS build
 
-# Install build tools like Python needed for some native Node modules (e.g., better-sqlite3)
-RUN apk add --no-cache python3 build-base
-ENV PYTHON=/usr/bin/python3
+# Define build arguments
+ARG VITE_GOOGLE_API_KEY
+ENV VITE_GOOGLE_API_KEY=$VITE_GOOGLE_API_KEY
 
-# Set the working directory in the container
+# Set the working directory
 WORKDIR /app
 
 # Copy package.json and install dependencies
 COPY package*.json ./
 RUN npm install
 
-# Copy the rest of the application source code
+# Copy the rest of the application
 COPY . .
 
-# Build the application for production if a build script exists
-RUN npm run build --if-present
-
-# Make port 38126 available
-EXPOSE 38126
-
-# Run the app using the start script
-CMD ["npm", "start"]
-
-# Use a single, straightforward Node.js environment
-FROM node:20-alpine
-
-# Define build arguments
-ARG VITE_GOOGLE_API_KEY
-ENV VITE_GOOGLE_API_KEY=$VITE_GOOGLE_API_KEY
-
-# Install build tools, just in case
-RUN apk add --no-cache python3 build-base
-ENV PYTHON=/usr/bin/python3
-
-# Set the working directory
-WORKDIR /app
-
-# Copy all source files
-COPY . .
-
-# Install all dependencies
-RUN npm install
-
-# Run the build process
+# Build the app
 RUN npm run build
 
-# Expose the port the server listens on
+# Stage 2: Serve the app with a simple, production-ready static server
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copy the package.json to install 'serve'
+COPY --from=build /app/package.json .
+COPY --from=build /app/package-lock.json .
+
+# Install 'serve'
+RUN npm install --omit=dev
+
+# Copy the built static files
+COPY --from=build /app/dist ./dist
+
+# Expose the port 'serve' will listen on
 EXPOSE 3000
 
-# Run the server directly using tsx
-CMD ["npx", "tsx", "server.ts"]
+# Start the server
+ENTRYPOINT []
+CMD [ "npx", "serve", "-s", "dist", "-l", "3000" ]
