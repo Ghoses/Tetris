@@ -1,5 +1,5 @@
 # Stage 1: Build the application
-FROM node:20-alpine AS build
+FROM node:20 AS build
 
 # Define build arguments
 ARG VITE_GOOGLE_API_KEY
@@ -8,34 +8,40 @@ ENV VITE_GOOGLE_API_KEY=$VITE_GOOGLE_API_KEY
 # Set the working directory
 WORKDIR /app
 
-# Copy package.json and install dependencies
+# Copy package.json and install dependencies (with build tools available)
 COPY package*.json ./
-RUN npm install --no-optional
+RUN npm install
 
 # Copy the rest of the application
 COPY . .
 
-# Build the app
+# Build the frontend
 RUN npm run build
 
-# Stage 2: Serve the app with a simple, production-ready static server
-FROM node:20-alpine
+# Stage 2: Run the Node.js server
+FROM node:20
 
 WORKDIR /app
 
-# Copy the package.json to install 'serve'
-COPY --from=build /app/package.json .
-COPY --from=build /app/package-lock.json .
+# Copy package.json only
+COPY package*.json ./
 
-# Install 'serve'
-RUN npm install --no-optional --omit=dev
+# Install production dependencies only
+RUN npm install --omit=dev
 
-# Copy the built static files
+# Copy the built frontend
 COPY --from=build /app/dist ./dist
 
-# Expose the port 'serve' will listen on
+# Copy the server file  
+COPY server.ts .
+COPY tsconfig.json .
+
+# Expose the port
 EXPOSE 3000
 
-# Start the server
-CMD [ "npx", "serve", "-s", "dist", "-l", "3000" ]
+# Set environment to production
+ENV NODE_ENV=production
+
+# Run the server
+CMD [ "node", "server.ts" ]
 CMD [ "npx", "serve", "-s", "dist", "-l", "3000" ]
