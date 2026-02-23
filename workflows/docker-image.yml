@@ -20,4 +20,5 @@ jobs:
       with:
         context: .
         push: true
-        tags: ghcr.io/${{ github.repository_owner }}/tetris:latest # Ersetzen Sie <repository-name>
+
+        tags: ghcr.io/${{ github.repository_owner }}/Tetris:latest # Ersetzen Sie <repository-name>
