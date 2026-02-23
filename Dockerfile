@@ -23,18 +23,17 @@ FROM node:20
 
 WORKDIR /app
 
-# Copy package.json only
-COPY package*.json ./
+# Copy package.json for reference
+COPY --from=build /app/package*.json ./
 
-# Install production dependencies only
-RUN npm install --omit=dev
+# Copy already-built node_modules with all native binaries compiled
+COPY --from=build /app/node_modules ./node_modules
 
 # Copy the built frontend
 COPY --from=build /app/dist ./dist
 
 # Copy the server file  
-COPY server.ts .
-COPY tsconfig.json .
+COPY --from=build /app/server.ts .
 
 # Expose the port
 EXPOSE 3000
@@ -44,4 +43,3 @@ ENV NODE_ENV=production
 
 # Run the server
 CMD [ "node", "server.ts" ]
-CMD [ "npx", "serve", "-s", "dist", "-l", "3000" ]
